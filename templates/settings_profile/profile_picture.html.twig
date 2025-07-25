@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block bread %}
+→ Profile Settings → Profile Picture
+{% endblock %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block body %}
+    {{ include('settings_profile/_settings_profile_tabs.html.twig') }}
+    {{ form_start(form) }}
+        <div class="flex flex-col items-center">
+        <div class="text-4xl mb-3">Profile Picture</div>
+        {{ include('shared/_avatar.html.twig', {size: 48, profile: app.user.userProfile}) }}
+        <b class="text-xl mb-2 mt-2">Upload your new profile picture</b>
+        <label class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer block w-fit mb-3 mt-3">
+            <span id="file-label-text">Choose File</span>
+            {{ form_widget(form.profilePicture, {'attr': {
+                'class': 'hidden',
+                'onchange': 'document.getElementById("file-label-text").textContent = this.files[0] ? this.files[0].name : "Choose file";'
+            }}) }}
+        </label>
+        {{ form_errors(form.profilePicture) }}
+        <button type="submit" class="block shadow-sm border-transparent bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-3 mt-2 mb-2">Save Changes</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

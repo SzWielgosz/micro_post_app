@@ -1,0 +1,33 @@
+<div class="mb-4 bg-white rounded-lg p-4 hover:bg-gray-50 transition">
+    <div class="flex items-center mb-2 gap-2">
+        {{ include('shared/_avatar.html.twig', {size: 16, profile: post.author.userProfile}) }}
+        <div class="flex flex-col text-sm text-gray-500 dark:text-gray-400">
+            <a href="{{ path('app_user_profile', {'id': post.author.id}) }}" class="hover:underline">{{ post.author.email }}</a>
+            <b>{{ post.author.userProfile.name }}</b>
+        </div>
+    </div>
+    <div class="text-2xl">
+        <a href="{{ path('app_micro_post_show', { id: post.id }) }}" class="hover:underline dark:text-gray-600 dark:hover:text-gray-400"> {{ post.title }} </a>
+    </div>
+    <div class="text-xl dark:text-gray-400">
+        {{ post.text }}
+    </div>
+    <div class="text-gray-500 dark:text-gray-400">
+        {{ post.created | date("M j, Y") }}
+    </div>
+    <div>
+        {% if post.likedBy.contains(app.user) %} {# Check if likedBy array contains current logged user #}
+        <a href="{{ path('app_unlike', {'id': post.id}) }}">Unlike <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ post.likedBy.count }}</span> </a>
+        {% else %}
+        <a href="{{ path('app_like', {'id': post.id}) }}">Like <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ post.likedBy.count }}</span> </a>
+        {% endif %}
+    </div>
+
+    <div class="flex">
+        {% if app.user.id == post.author.id %}
+            <a href="{{ path('app_micro_post_edit', {'microPost': post.id}) }}" class="mr-2">Edit</a>
+        {% endif %}
+        <a href="{{ path('app_micro_post_comment', {'microPost': post.id}) }}">Comment</a>
+        <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700 ml-2">{{ post.comments.count }}</span>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="mb-4 bg-white rounded-lg p-4 hover:bg-gray-50 transition">
+    <div class="text-2xl">
+        <a href="{{ path('app_micro_post_show', { id: post.id }) }}" class=" hover:underline dark:text-gray-600 dark:hover:text-gray-400"> {{ post.title }} </a>
+    </div>
+    <div class="text-xl dark:text-gray-400">
+        {{ post.text }}
+    </div>
+    <div class="text-gray-500 dark:text-gray-400">
+        {{ post.created | date("M j, Y") }}
+    </div>
+    <div>
+        {% if post.likedBy.contains(app.user) %}
+        <a href="{{ path('app_unlike', {'id': post.id}) }}">Unlike <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ post.likedBy.count }}</span> </a>
+        {% else %}
+        <a href="{{ path('app_like', {'id': post.id}) }}">Like <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ post.likedBy.count }}</span> </a>
+        {% endif %}
+    </div>
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+        <a href="{{ path('app_user_profile', {'id': post.author.id}) }}">{{ post.author.email }}</a>
+    </div>
+    <div class="flex">
+        {% if app.user and app.user.id == post.author.id %}
+            <a href="{{ path('app_micro_post_edit', {'microPost': post.id}) }}" class="mr-2">Edit</a>
+        {% endif %}
+        <a href="{{ path('app_micro_post_comment', {'microPost': post.id}) }}">Comment</a>
+        <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700 ml-2">{{ post.comments.count }}</span>
+    </div>
+</div>

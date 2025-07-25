@@ -1,0 +1,9 @@
+twig:
+    file_name_pattern: '*.twig'
+    form_themes: ['form/fields.html.twig'] # Default form theme
+    globals:
+        profiles: '%profiles%' #**Variable for the folder where profile pictures are stored**
+
+when@test:
+    twig:
+        strict_variables: true

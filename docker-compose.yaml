@@ -1,0 +1,22 @@
+version: "3.8" # wersja docker compose
+services: # jakie kontenery chcemy
+  mysql: # nadajemy nazwe kontenerowi
+    image: mariadb:10.8.3 # przekazujemy obraz do kontenera
+    # Uncomment below when on Mac M1
+    # platform: linux/arm64/v8
+    command: --default-authentication-plugin=mysql_native_password # opcjonalne komendy w kontenerze
+    restart: always
+    environment: # zmienne środowiskowe w kontenerze
+      MYSQL_ROOT_PASSWORD: root # hasło do roota
+    ports: # deklaracja portów
+      - 3306:3306 # pierwszy port w kontenerze, drugi port do połączenia na maszynie, która je odpala
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  mailer:
+    image: schickling/mailcatcher
+    ports:
+      - 1080:1080
+      - 1025:1025

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block bread %}
+→ Register
+{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="rounded-md p-2 border-red-300 bg-red-50 border dark:border-red-600 dark:bg-red-700 dark:text-white mb-4" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <div class="text-xl">Basic information</div>
+    <div class="text-gray-500 border-b border-gray-300 mb-4 pb-4">Enter your credentials</div>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+    <div>
+        {{ form_errors(registrationForm.email) }}
+        {{ form_label(registrationForm.email, 'Email', {'attr': {'class':'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+        {{ form_widget(registrationForm.email, {'attr' : {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            {{ form_label(registrationForm.plainPassword.first, 'Password', {'attr': {'class':'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+            {{ form_widget(registrationForm.plainPassword.first, {'attr' : {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
+            {{ form_errors(registrationForm.plainPassword.first) }}
+        </div>
+
+        <div>
+            {{ form_label(registrationForm.plainPassword.second, 'Repeated Password', {'attr': {'class':'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+            {{ form_widget(registrationForm.plainPassword.second, {'attr' : {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
+            {{ form_errors(registrationForm.plainPassword.second) }}
+        </div>
+    </div>
+
+    <div class="text-xl">Your Profile</div>
+    <div class="text-gray-500 border-b border-gray-300 mb-4 pb-4">Enter more (optional) details about Yourself</div>
+
+    {{ include('settings_profile/_profile_form.html.twig', {form: registrationForm.userProfile}) }}
+
+    <div>
+        {{ form_errors(registrationForm.agreeTerms) }}
+        {{ form_label(registrationForm.agreeTerms) }}
+        {{ form_widget(registrationForm.agreeTerms) }}
+    </div>
+
+    <div><button type="submit" class="btn block w-full shadow-sm border-transparent bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">Register</button></div>
+    {{ form_end(registrationForm) }}
+    <div class="flex justify-center gap-1">Already have an account?<a href="{{ path('app_login') }}">Login here</a></div>
+{% endblock %}
